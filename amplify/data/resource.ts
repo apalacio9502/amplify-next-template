@@ -6,15 +6,15 @@ const schema = a.schema({
   clientes: a
     .model({
       // Campos
+      nombre: a.string().required(),
       nif: a.integer().required(),
-      razonSocial: a.string().required(),
-      paisId: a.string().required(),
-      ciudadId: a.string().required(),
+      paisNombre: a.string().required(),
+      ciudadNombre: a.string().required(),
       direccion: a.string().required(),
       telefonoPrincipal: a.integer().required(),
-      telefonoAlterno: a.integer().required(),
+      telefonoAlterno: a.integer(),
       // Relaciones
-      pais: a.belongsTo('paises', 'paisId'),
+      relacionPais: a.belongsTo('paises', 'paisNombre'),
     })
     .authorization(
       allow => [allow.groups([
@@ -25,19 +25,17 @@ const schema = a.schema({
 
   // Tabla de paises
   paises: a
-      .model({
-        // Campos
-        nombre: a.string().required(),
-        indicativo: a.integer().required(),
-        // Relaciones
-        clientes: a.hasMany('clientes', 'paisId'),
-      })
-      .authorization(
-        allow => [allow.groups([
-          "administrador",
-          "comercial",
-          "operaciones"
-        ])]),
+    .model({
+      // Campos
+      nombre: a.string().required(),
+      indicativo: a.integer().required(),
+      // Relaciones
+      clientes: a.hasMany('clientes', 'paisNombre'),
+    })
+    .authorization(
+      allow => [allow.groups([
+        "administrador",
+      ])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

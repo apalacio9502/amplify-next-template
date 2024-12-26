@@ -44,20 +44,20 @@ export default function MyComponent() {
 
   
   // Función para manejar el clic en el botón
-  function deleteClientes(id: string) {
+  function deleteClientes(nombre: string) {
     try {
         // Intentamos eliminar el TODO
-        client.models.clientes.delete({ id });
+        client.models.clientes.delete({ nombre });
         // Si la eliminación es exitosa, mostramos el Snackbar
         notifications.show(
-          `El registo ${id} ha sido eliminado correctamente.`,
+          `El registo ${nombre} ha sido eliminado correctamente.`,
           {autoHideDuration: 6000,severity:"success",}
         );
   
     } catch (error) {
 
         notifications.show(
-          `El registo ${id} no ha sido eliminado correctamente.`,
+          `El registo ${nombre} no ha sido eliminado correctamente.`,
           {autoHideDuration: 6000,severity:"success",}
         );
 
@@ -66,9 +66,8 @@ export default function MyComponent() {
 
   // Definir las columnas de la tabla
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Id', width: 150 },
+    { field: 'nombre', headerName: 'Nombre', width: 150 },
     { field: 'nif', headerName: 'Nif', width: 150 },
-    { field: 'razonSocial', headerName: 'Razon Social', width: 150 },
     {
       field: 'actions',
       headerName: 'Acciones',
@@ -84,9 +83,8 @@ export default function MyComponent() {
 
   // Mapear los todos a un formato compatible con DataGrid
   const rows = clientes.map((clientes) => ({
-    id: clientes.id,  // El identificador único debe ser 'id'
+    nombre: clientes.nombre,  // El identificador único debe ser 'id'
     nif: clientes.nif,
-    razonSocial: clientes.razonSocial,
   }));
 
   return (
