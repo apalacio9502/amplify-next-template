@@ -73,7 +73,7 @@ export default function MyComponent() {
       headerName: 'Acciones',
       width: 150,
       renderCell: (params) => (
-        <IconButton onClick={() => deleteClientes(params.row.id)}>
+        <IconButton onClick={() => deleteClientes(params.row.nombre)}>
             <DeleteIcon color ="primary"/>
         </IconButton>
       ),
