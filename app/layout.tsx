@@ -14,16 +14,20 @@ import { I18n } from 'aws-amplify/utils';
 import { translations } from '@aws-amplify/ui-react';
 
 // Se importan los modulos de toolpad
-import { AppProvider } from '@toolpad/core/AppProvider';
+import { AppProvider } from '@toolpad/core/nextjs';
 import type { Navigation } from '@toolpad/core/AppProvider';
 
 // Se importan los modulos de mui
 import LinearProgress from '@mui/material/LinearProgress';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 // Se importan los modulos de internos
-import { components } from './components/authenticator'
+import { components } from './modulos/authenticator';
+import { customTheme } from './modulos/theme';
+
+import { useDemoRouter } from '@toolpad/core/internal';
 
 // Se define las configuraciones ---------------------------------------------
 
@@ -39,12 +43,25 @@ I18n.putVocabularies(translations);
 // Se define la variable navegacion
 const navegacion: Navigation = [
   {
-    kind: 'header',
-    title: 'Main items',
+    title: 'Inicio',
+    icon: <DashboardIcon />,
   },
   {
-    title: 'Dashboard',
-    icon: <DashboardIcon/>,
+    kind: 'divider',
+  },
+  {
+    kind: 'header',
+    title: 'Garantías',
+  },
+  {
+    segment: 'garantias/clientes',
+    title: 'Clientes',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'garantias/polizas',
+    title: 'Polizas',
+    icon: <DashboardIcon />,
   },
 ];
 
@@ -56,6 +73,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="es" data-toolpad-color-scheme="dark">
       <head>
@@ -63,13 +81,11 @@ export default function RootLayout({
           <title>LifeOne</title>
       </head>
       <body>
-        <Authenticator hideSignUp components={components}>
+        <Authenticator components={components}>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <React.Suspense fallback={<LinearProgress />}>
-              <AppProvider navigation={navegacion}>
-                
+              <AppProvider navigation={navegacion} theme={customTheme}>
                   {children}
-                
               </AppProvider>
             </React.Suspense>
           </AppRouterCacheProvider>

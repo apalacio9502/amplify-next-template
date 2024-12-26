@@ -33,9 +33,9 @@ function toolbarActions() {
     return (
         <Stack direction="row">
             <IconButton onClick={signOut}>
-                <LogoutIcon />
+                <LogoutIcon color="primary"/>
             </IconButton>
-            <ThemeSwitcher />
+            <ThemeSwitcher/>
         </Stack>
     );
 }  
@@ -50,7 +50,9 @@ export default function DashboardPagesLayout(
                 appTitle: appTitle,
                 toolbarActions: toolbarActions,
             }}>
-            <PageContainer>{props.children}</PageContainer>
+            <PageContainer breadcrumbs={[]}>
+                {props.children}
+            </PageContainer>
         </DashboardLayout>
   );
 }

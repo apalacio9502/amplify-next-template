@@ -13,9 +13,12 @@ import type { Schema } from "@/amplify/data/resource";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
+import Button from '@mui/material/Button';
 
 // Se importan los modulos de internos
-import { useSnackbar } from '../components/snackbar'
+import { useSnackbar } from '../modulos/snackbar'
 
 type Todo = Schema['Todo']['type'];
 
@@ -41,10 +44,10 @@ export default function MyComponent() {
         // Intentamos eliminar el TODO
         client.models.Todo.delete({ id });
         // Si la eliminación es exitosa, mostramos el Snackbar
-        showSnackbar("El registo ${id} ha sido eliminado correctamente.", "success");
+        showSnackbar(`El registo ${id} ha sido eliminado correctamente.`, "success");
   
     } catch (error) {
-        showSnackbar("El registo ${id} no ha sido eliminado correctamente.", "error");
+        showSnackbar(`El registo ${id} no ha sido eliminado correctamente.`, "error");
     }
   }
 
@@ -58,7 +61,7 @@ export default function MyComponent() {
       width: 150,
       renderCell: (params) => (
         <IconButton onClick={() => deleteTodo(params.row.id)}>
-            <DeleteIcon/>
+            <DeleteIcon color ="primary"/>
         </IconButton>
       ),
     },
@@ -73,20 +76,28 @@ export default function MyComponent() {
 
   return (
     <div>
-        <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-                pagination: {
-                paginationModel: {
-                    pageSize: 5,
-                },
-                },
-            }}
-            pageSizeOptions={[5]}
-        />
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+                <Grid size={12}>
+                    <Button startIcon={<DeleteIcon />}>
+                        Delete
+                    </Button>
+                </Grid>  
+                <Grid size={12}>
+                    <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: {
+                                pageSize: 5,
+                            },
+                        },
+                    }}
+                    pageSizeOptions={[5]}/>
+                </Grid>
+            </Grid>
+        </Box>
         {snackbar}
     </div>
   );
