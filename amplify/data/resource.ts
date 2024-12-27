@@ -32,7 +32,7 @@ const schema = a.schema({
     .model({
       // Campos
       nombre: a.string().required(),
-      pais: a.integer().required(),
+      pais: a.string().required(),
       // Relaciones
       relacionCiudades: a.hasMany('clientes', 'ciudad'),
       relacionPais: a.belongsTo('paises', 'pais'),
