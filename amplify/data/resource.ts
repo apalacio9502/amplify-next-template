@@ -66,7 +66,7 @@ const schema = a.schema({
       indicativo: a.integer().required(),
       // Relaciones
       relacionClientes: a.hasMany('clientes', 'pais'),
-      relacionCiudades: a.hasMany('ciudades', 'ciudad'),
+      relacionCiudades: a.hasMany('ciudades', 'pais'),
     })
     .identifier(['nombre'])
     .authorization(
